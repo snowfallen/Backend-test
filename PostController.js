@@ -32,7 +32,12 @@ class PostController {
     }
     async update(req , res){
         try{
-
+            const post = req.body
+            if(!post._id){
+                res.status(400).json({message:"ID dont inputet"})
+            }
+            const updatedPost = await Post.findByIdAndUpdate(post._id , post , {new: true})
+            return res.json(updatedPost)
         }catch(e){
             res.status(500).json(e)
         }
